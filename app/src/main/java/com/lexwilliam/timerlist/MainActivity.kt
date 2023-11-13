@@ -118,7 +118,6 @@ class MainActivity : ComponentActivity() {
                                     Column(
                                         modifier = Modifier
                                             .fillMaxWidth()
-                                            .height(310.dp)
                                             .background(
                                                 MaterialTheme.colorScheme.primary,
                                                 RoundedCornerShape(16.dp)
@@ -129,6 +128,18 @@ class MainActivity : ComponentActivity() {
                                     ) {
                                         Text(text = timer.id.toString().split("-")[0])
                                         Text(text = timer.displayTime.toString(), fontSize = 50.sp)
+                                        Text(text = timer.priority.name)
+                                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                                            Button(onClick = ( { viewModel.setTimerPriority(id = timer.id, priority = Priority.HIGH) } )) {
+                                                Text("HIGH")
+                                            }
+                                            Button(onClick = ( { viewModel.setTimerPriority(id = timer.id, priority = Priority.NEUTRAL) } )) {
+                                                Text("NEUTRAL")
+                                            }
+                                            Button(onClick = ( { viewModel.setTimerPriority(id = timer.id, priority = Priority.LOW) } )) {
+                                                Text("LOW")
+                                            }
+                                        }
                                     }
                                 }
                             }

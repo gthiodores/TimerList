@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.datetime.Clock
+import java.util.UUID
 
 class MainViewModel(
 
@@ -32,6 +33,11 @@ class MainViewModel(
 
     fun onChangeColumnClicked() {
         _isFilterShown.update { old -> !old }
+    }
+
+    fun setTimerPriority(id: UUID, priority: Priority) {
+        _timerList.update { old -> old.map { timer -> if(timer.id == id) timer.copy(priority = priority) else timer } }
+        _timerList.update { old -> old.sortedWith(compareByDescending<TimerItem> { it.priority.value }.thenBy { it.startAt }) }
     }
 
 }
